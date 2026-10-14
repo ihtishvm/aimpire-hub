@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aimpire</title>
+<meta name="description" content="Open your account in about two minutes. English, Norsk, हिन्दी, اردو.">
+<meta name="theme-color" content="#0B2341">
+
+<!-- SKJUL FRA GOOGLE: slett de fire tegnene foran og de tre bak meta-linjen under.
+     Siden er fortsatt aapen for alle som har lenken; dette skjuler den bare fra soek. -->
+<!-- <meta name="robots" content="noindex, nofollow"> -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aimpire">
+<meta property="og:description" content="Open your account in about two minutes. English, Norsk, हिन्दी, اردو.">
+<meta property="og:image" content="assets/ap-gradient.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/ap-gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* Aimpire's own palette, from "Presentation - Aimpire" — the only deck
+   without a partner layered on top. Navy, gold, lime, logo gradient. */
+:root{
+  --ink:#0B2341; --ink-deep:#071A31; --ink-raise:#123055;
+  --gold:#E8B84B; --gold-soft:#F3CE78; --gold-deep:#C99A2E;
+  --lime:#A8D44A; --red:#E0483C;
+  --chalk:#F5F3EF; --chalk-dim:#9DB0C9; --rule:#1E3D66;
+  --v1:#E8B84B; --v2:#4EA8DE; --v3:#A8D44A; --v4:#E8833A;
+  --grad:linear-gradient(118deg,#1B4FD8 0%,#15D8C4 33%,#C21FBF 68%,#FBE16B 100%);
+  --measure:36rem;
+  --face:"Montserrat",system-ui,-apple-system,sans-serif;
+}
+:root[data-theme="light"]{
+  --ink:#F5F3EF; --ink-deep:#E7E3DB; --ink-raise:#FFFFFF;
+  --chalk:#0B2341; --chalk-dim:#5A7093; --rule:#D3D8E2; --gold-soft:#8A6410;
+}
+html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
+html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--chalk);font-family:var(--face);
+  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[data-font="nastaliq"] body{line-height:2.15}
+html[data-font="deva"] body{line-height:1.8}
+.shell{max-width:46rem;margin:0 auto;padding:0 clamp(18px,5vw,40px) 72px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+[hidden]{display:none !important}
+
+/* masthead */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:26px 0 0;border-bottom:1px solid var(--rule)}
+.wordmark{display:flex;align-items:center;gap:11px;padding-bottom:12px}
+.mono{width:40px;height:40px;flex:0 0 auto;display:block}
+.wordmark .wm{display:block;font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;
+  letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.wordmark .wm em{font-style:normal;color:var(--gold)}
+.wordmark .tag{display:block;margin-top:4px;font-size:9px;letter-spacing:.32em;color:var(--lime);
+  font-weight:700;font-family:"Montserrat",sans-serif;text-transform:uppercase}
+.switch{display:flex;gap:2px;padding-bottom:8px;flex-wrap:wrap}
+.switch button{background:none;border:0;border-bottom:2px solid transparent;color:var(--chalk-dim);
+  font:inherit;font-size:13.5px;font-weight:600;padding:5px 9px;cursor:pointer;
+  font-family:"Montserrat",sans-serif;min-height:34px}
+.switch button[aria-pressed="true"]{color:var(--chalk);border-bottom-color:var(--gold)}
+.switch .thm{font-size:15px}
+
+/* hero */
+.hero{padding:52px 0 40px}
+.hero h1{margin:0;font-family:"Montserrat",sans-serif;font-weight:900;
+  font-size:clamp(2.6rem,11vw,4.9rem);line-height:.98;letter-spacing:-.035em;
+  text-transform:uppercase;text-wrap:balance}
+html[data-font="deva"] .hero h1,html[data-font="nastaliq"] .hero h1{
+  font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.3;
+  font-size:clamp(2rem,8vw,3.4rem)}
+.hero h1 span{display:block}
+.hero h1 span:last-child{background:var(--grad);-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+@supports not (background-clip:text){ .hero h1 span:last-child{color:var(--gold)} }
+.hero p{margin:26px 0 0;max-width:var(--measure);color:var(--chalk-dim);font-size:1.02rem}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 span{animation:rise .55s cubic-bezier(.2,.7,.3,1) both}
+  .hero h1 span:nth-child(2){animation-delay:.07s}
+}
+@keyframes rise{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
+
+/* sections */
+.sec{padding:50px 0 0}
+.sec > h2{margin:0 0 22px;font-size:1.32rem;font-weight:800;letter-spacing:.01em;
+  color:var(--gold);font-family:"Montserrat",sans-serif}
+html[data-font="deva"] .sec > h2,html[data-font="nastaliq"] .sec > h2{
+  font-family:var(--face);letter-spacing:0}
+.sec > h2 b{display:block;width:46px;height:3px;background:var(--grad);margin-top:11px}
+.lede{max-width:var(--measure);color:var(--chalk-dim);margin:0 0 26px}
+
+/* sponsor */
+.spon{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin:30px 0 0;
+  padding:12px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  font-size:.86rem;color:var(--chalk-dim)}
+.spon strong{color:var(--chalk);font-weight:700}
+.spon .fp{font-variant-numeric:tabular-nums;color:var(--lime);font-weight:700}
+.spon button{background:none;border:0;color:var(--gold-soft);font:inherit;font-size:.86rem;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}
+
+/* primary action */
+.slab{display:block;background:var(--grad);color:#071A31;text-decoration:none;
+  padding:22px 24px;margin:0 0 2px;border:0}
+.slab .t{display:block;font-family:"Montserrat",sans-serif;font-weight:900;font-size:1.4rem;
+  letter-spacing:.01em;line-height:1.12;text-transform:uppercase}
+html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t{
+  font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.7}
+.slab .s{display:block;margin-top:5px;font-size:.9rem;opacity:.72;font-weight:600}
+.slab:hover,.slab:focus-visible{filter:brightness(1.12)}
+
+/* ruled link rows */
+.rows{border-top:1px solid var(--rule)}
+.row{display:flex;align-items:baseline;gap:14px;padding:16px 2px;
+  border-bottom:1px solid var(--rule);text-decoration:none;color:inherit}
+.row .t{font-weight:700;font-size:1.04rem;letter-spacing:-.01em}
+.row .s{color:var(--chalk-dim);font-size:.88rem;flex:1}
+.row:hover .t,.row:focus-visible .t{color:var(--gold-soft)}
+.row .go{color:var(--rule);font-weight:700;font-family:"Montserrat",sans-serif}
+.row:hover .go{color:var(--gold)}
+html[dir="rtl"] .row .go{transform:scaleX(-1)}
+
+/* short list */
+.rail{list-style:none;margin:0;padding:0;position:relative;counter-reset:n}
+.rail::before{content:"";position:absolute;inset-block:14px;inset-inline-start:13px;
+  width:1px;background:var(--rule)}
+.rail > li{position:relative;padding:0 0 26px;padding-inline-start:46px;max-width:var(--measure)}
+.rail > li:last-child{padding-bottom:0}
+.rail > li::before{content:counter(n);counter-increment:n;position:absolute;inset-inline-start:0;
+  top:-1px;width:27px;height:27px;border:1px solid var(--rule);border-radius:50%;
+  background:var(--ink);color:var(--chalk-dim);display:grid;place-items:center;
+  font-size:.8rem;font-weight:700;font-family:"Montserrat",sans-serif}
+
+/* step-by-step guide */
+.guide{list-style:none;counter-reset:g;margin:0;padding:0;position:relative}
+.guide::before{content:"";position:absolute;inset-block:16px;inset-inline-start:15px;
+  width:1px;background:var(--rule)}
+.guide > li{counter-increment:g;position:relative;padding:0 0 26px;padding-inline-start:52px;
+  max-width:var(--measure)}
+.guide > li:last-child{padding-bottom:0}
+.guide > li::before{content:counter(g);position:absolute;inset-inline-start:0;top:-2px;
+  width:31px;height:31px;border-radius:50%;background:var(--ink);border:1px solid var(--gold);
+  color:var(--gold);display:grid;place-items:center;font-size:.85rem;font-weight:800;
+  font-family:"Montserrat",sans-serif}
+.guide h3{margin:0 0 5px;font-size:1.05rem;font-weight:800;letter-spacing:-.01em}
+.guide p{margin:0;color:var(--chalk-dim);font-size:.95rem}
+
+/* language chips for the partner's own videos */
+.vnote{margin:12px 0 0;padding:11px 14px;background:var(--ink-deep);
+  border-inline-start:3px solid var(--gold);font-size:.86rem;color:var(--chalk-dim)}
+.langs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.langs a{display:inline-block;padding:7px 12px;border:1px solid var(--rule);border-radius:999px;
+  font-size:.82rem;font-weight:600;text-decoration:none;color:var(--chalk-dim);
+  font-family:"Montserrat",sans-serif;background:var(--ink-deep)}
+.langs a:hover,.langs a:focus-visible{border-color:var(--gold);color:var(--gold)}
+
+/* annotated screenshot */
+.shot{margin:14px 0 0;position:relative;max-width:300px}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:6px}
+.pin{position:absolute;width:24px;height:24px;border-radius:50%;background:var(--gold);
+  color:var(--ink);font:800 12px/1 "Montserrat",sans-serif;display:grid;place-items:center;
+  transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(11,35,65,.85);pointer-events:none}
+html[dir="rtl"] .pin{transform:translate(50%,-50%)}
+.keys{list-style:none;margin:12px 0 0;padding:0;counter-reset:k}
+.keys li{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:.88rem;
+  color:var(--chalk-dim)}
+.keys li::before{content:counter(k);counter-increment:k;flex:0 0 auto;width:20px;height:20px;
+  border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;
+  font:800 11px/1 "Montserrat",sans-serif;margin-top:2px}
+
+/* earnings */
+.earn{margin:0;padding:0;list-style:none}
+.earn > li{padding:0 0 22px;max-width:var(--measure);position:relative;padding-inline-start:20px}
+.earn > li::before{content:"";position:absolute;inset-inline-start:0;top:.6em;
+  width:8px;height:8px;background:var(--gold)}
+.earn h3{margin:0 0 3px;font-size:1.04rem;font-weight:700;letter-spacing:-.01em}
+.earn p{margin:0;color:var(--chalk-dim);font-size:.93rem}
+.warn{max-width:var(--measure);margin:8px 0 0;padding:18px 20px;background:var(--ink-deep);
+  border-inline-start:3px solid var(--gold);font-size:.93rem}
+
+/* values — tiers that widen */
+.tiers{margin:0;padding:0;list-style:none}
+.tiers > li{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;margin-bottom:3px;
+  background:var(--ink-raise);border-inline-start:3px solid var(--gold)}
+.tiers > li:nth-child(1){width:76%;border-inline-start-color:var(--v1)}
+.tiers > li:nth-child(2){width:84%;border-inline-start-color:var(--v2)}
+.tiers > li:nth-child(3){width:92%;border-inline-start-color:var(--v3)}
+.tiers > li:nth-child(4){width:100%;border-inline-start-color:var(--v4)}
+.tiers > li:nth-child(1) .ltr{color:var(--v1)} .tiers > li:nth-child(2) .ltr{color:var(--v2)}
+.tiers > li:nth-child(3) .ltr{color:var(--v3)} .tiers > li:nth-child(4) .ltr{color:var(--v4)}
+@media (max-width:560px){ .tiers > li{width:100% !important} }
+.tiers .ltr{font-family:"Montserrat",sans-serif;font-weight:900;font-size:2rem;line-height:.85;
+  flex:0 0 auto;width:1.1em}
+.tiers h3{margin:0 0 3px;font-size:1rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;font-family:"Montserrat",sans-serif}
+html[data-font="deva"] .tiers h3,html[data-font="nastaliq"] .tiers h3{
+  font-family:"Montserrat",sans-serif}
+.tiers p{margin:0;color:var(--chalk-dim);font-size:.92rem}
+
+/* notices */
+.notice{max-width:var(--measure);padding:22px 24px;background:var(--ink-raise);
+  border-inline-start:3px solid var(--lime)}
+.notice.alert{border-inline-start-color:var(--gold)}
+.notice h3{margin:0 0 8px;font-size:1.1rem;font-weight:700}
+.notice p{margin:0 0 10px;color:var(--chalk-dim);font-size:.94rem}
+.notice p:last-child{margin-bottom:0}
+.notice .foot{font-size:.85rem;padding-top:12px;margin-top:14px;border-top:1px solid var(--rule)}
+.choice{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.choice button{flex:1 1 150px;padding:13px;border:1px solid var(--rule);background:none;
+  color:var(--chalk);font:inherit;font-size:.92rem;font-weight:700;cursor:pointer;
+  font-family:"Montserrat",sans-serif}
+.choice button:first-child{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+/* leader tool */
+.tool{max-width:var(--measure)}
+.tool p{color:var(--chalk-dim);font-size:.94rem;margin:0 0 16px}
+.tool input{width:100%;background:var(--ink-deep);border:1px solid var(--rule);color:var(--chalk);
+  padding:14px 15px;font:inherit;font-size:.95rem;font-family:"Montserrat",sans-serif;
+  margin-bottom:8px}
+.tool input:focus{border-color:var(--gold);outline:none}
+.tool button{width:100%;background:var(--chalk);color:var(--ink);border:0;padding:15px;
+  font:inherit;font-weight:700;font-size:.98rem;cursor:pointer;font-family:"Montserrat",sans-serif}
+.out{margin-top:14px;padding:14px 15px;background:var(--ink-deep);border:1px solid var(--rule);
+  font-size:.8rem;word-break:break-all;line-height:1.7}
+.out b{display:block;color:var(--lime);margin-bottom:6px;font-size:.85rem}
+.out.bad b{color:var(--gold-soft)}
+
+.risk{max-width:var(--measure);margin:56px 0 0;padding-top:20px;border-top:1px solid var(--rule);
+  color:var(--chalk-dim);font-size:.85rem}
+.sig{margin:30px 0 0;font-size:.8rem;color:var(--chalk-dim);font-family:"Montserrat",sans-serif}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="mast">
+    <div class="wordmark">
+      <img class="mono" src="assets/ap-gradient.png" alt="" width="40" height="40">
+      <span><span class="wm">Aim<em>pire</em></span><span class="tag">Aim for it</span></span>
+    </div>
+    <nav class="switch" id="switch" aria-label="Language"></nav>
+  </header>
+
+  <section class="hero">
+    <h1><span id="h1"></span><span id="h2"></span></h1>
+    <p id="hsub"></p>
+    <div class="spon" id="spon" hidden></div>
+  </section>
+
+  <section class="sec" id="s-main">
+    <h2 id="t-main"></h2>
+    <div class="notice" id="notice-none" hidden>
+      <h3 id="nn-t"></h3><p id="nn-b"></p><p class="foot" id="nn-f"></p>
+    </div>
+    <div class="notice alert" id="notice-conflict" hidden>
+      <p id="nc-t"></p>
+      <div class="choice"><button id="nc-keep"></button><button id="nc-use"></button></div>
+    </div>
+    <div id="main-links"></div>
+  </section>
+
+  <section class="sec">
+    <h2 id="t-guide"></h2>
+    <p class="lede" id="guide-lede"></p>
+    <ol class="guide" id="guide"></ol>
+  </section>
+
+  <section class="sec" id="s-platform"><h2 id="t-platform"></h2><div id="platform-links"></div></section>
+
+  <section class="sec">
+    <h2 id="t-earn"></h2>
+    <p class="lede" id="earn-lede"></p>
+    <ul class="earn" id="earn-list"></ul>
+    <p class="warn" id="earn-warn"></p>
+  </section>
+
+  <section class="sec"><h2 id="t-values"></h2><ul class="tiers" id="tiers"></ul></section>
+  <section class="sec" id="s-video"><h2 id="t-video"></h2><div id="video-links"></div></section>
+  <section class="sec" id="s-docs"><h2 id="t-docs"></h2><div id="docs-links"></div></section>
+  <section class="sec" id="s-help"><h2 id="t-help"></h2><div id="help-links"></div></section>
+
+  <section class="sec">
+    <h2 id="t-leaders"></h2>
+    <div class="tool">
+      <p id="ld-body"></p>
+      <input id="ld-in" type="url" autocomplete="off" spellcheck="false">
+      <button id="ld-btn" onclick="makeLink()"></button>
+      <div class="out" id="ld-out" hidden></div>
+    </div>
+  </section>
+
+  <p class="risk" id="risk"></p>
+  <p class="sig">Aimpire &middot; <span id="yr"></span></p>
+</div>
+
+<script>
+const C = {"brand":{"name":"Aimpire","name_ur":"ایمپائر","description":"Open your account in about two minutes. English, Norsk, हिन्दी, اردو."},"hero":{"en":{"line1":"Start here.","line2":"Aim for it.","sub":"Open your account in about two minutes. No experience needed — and we tell you the risks straight."},"ur":{"line1":"یہیں سے شروع کریں۔","line2":"اپنا نشانہ بنائیں۔","sub":"تقریباً دو منٹ میں اپنا اکاؤنٹ کھولیں۔ کسی تجربے کی ضرورت نہیں — اور خطرات ہم صاف صاف بتاتے ہیں۔"},"no":{"line1":"Start her.","line2":"Sikt etter det.","sub":"Åpne kontoen din på rundt to minutter. Ingen erfaring nødvendig — og vi sier risikoen rett ut."},"hi":{"line1":"यहाँ से शुरू करें।","line2":"निशाना बनाएँ।","sub":"लगभग दो मिनट में अपना खाता खोलें। किसी अनुभव की ज़रूरत नहीं — और जोखिम हम साफ़ बताते हैं।"}},"sponsor":{"en":{"goes_to":"Your sign-up goes to","fingerprint":"link ends","change":"Change","none_title":"You need your sponsor's invite link","none_body":"Every member has their own invite link, so whoever brought you here gets the credit. Ask them for it and open Aimpire from that link. We will not pick a sponsor for you.","none_foot":"Sharing this page yourself? Make your own Aimpire link at the bottom — a plain link credits nobody.","conflict":"You already have an invite from link {A}. This one is {B}. Which sponsor is right?","keep":"Keep {A}","use":"Use {B}"},"ur":{"goes_to":"آپ کی رجسٹریشن یہاں جائے گی","fingerprint":"لنک کا اختتام","change":"تبدیل کریں","none_title":"آپ کو اپنے سپانسر کا دعوتی لنک چاہیے","none_body":"ہر رکن کا اپنا دعوتی لنک ہوتا ہے، تاکہ جو آپ کو یہاں لایا اسے کریڈٹ ملے۔ ان سے لنک منگوائیں اور اسی سے ایمپائر کھولیں۔ ہم آپ کے لیے سپانسر خود منتخب نہیں کریں گے۔","none_foot":"کیا آپ خود یہ صفحہ شیئر کر رہے ہیں؟ نیچے اپنا ایمپائر لنک بنائیں — سادہ لنک کسی کو کریڈٹ نہیں دیتا۔","conflict":"آپ کے پاس پہلے سے لنک {A} کی دعوت ہے۔ یہ {B} ہے۔ درست سپانسر کون ہے؟","keep":"{A} ہی رکھیں","use":"{B} استعمال کریں"},"no":{"goes_to":"Registreringen din går til","fingerprint":"lenken ender på","change":"Endre","none_title":"Du trenger sponsorens invitasjonslenke","none_body":"Hvert medlem har sin egen invitasjonslenke, så den som tok deg med får æren. Be om den, og åpne Aimpire derfra. Vi velger ikke sponsor for deg.","none_foot":"Deler du siden selv? Lag din egen Aimpire-lenke nederst — en bar lenke krediterer ingen.","conflict":"Du har allerede en invitasjon fra lenke {A}. Denne er {B}. Hvilken sponsor er riktig?","keep":"Behold {A}","use":"Bruk {B}"},"hi":{"goes_to":"आपका पंजीकरण यहाँ जाएगा","fingerprint":"लिंक का अंत","change":"बदलें","none_title":"आपको अपने स्पॉन्सर का निमंत्रण लिंक चाहिए","none_body":"हर सदस्य का अपना निमंत्रण लिंक होता है, ताकि जो आपको लाया उसे श्रेय मिले। उनसे लिंक माँगें और उसी से Aimpire खोलें। हम आपके लिए स्पॉन्सर नहीं चुनेंगे।","none_foot":"क्या आप खुद यह पेज साझा कर रहे हैं? नीचे अपना Aimpire लिंक बनाएँ — सादा लिंक किसी को श्रेय नहीं देता।","conflict":"आपके पास पहले से लिंक {A} का निमंत्रण है। यह {B} है। सही स्पॉन्सर कौन है?","keep":"{A} ही रखें","use":"{B} उपयोग करें"}},"sections":{"start":{"en":"The short version","ur":"مختصر خلاصہ","no":"Kort fortalt","hi":"संक्षेप में"},"platform":{"en":"Where things live","ur":"چیزیں کہاں ہیں","no":"Hvor ting finnes","hi":"चीज़ें कहाँ हैं"},"earn":{"en":"How money reaches you","ur":"پیسہ آپ تک کیسے پہنچتا ہے","no":"Hvordan penger når deg","hi":"पैसा आप तक कैसे पहुँचता है"},"values":{"en":"What the name means","ur":"نام کا مطلب","no":"Hva navnet betyr","hi":"नाम का अर्थ"},"video":{"en":"Watch first","ur":"پہلے دیکھیں","no":"Se først","hi":"पहले देखें"},"docs":{"en":"Guides that already exist","ur":"پہلے سے موجود رہنمائی","no":"Guider som allerede finnes","hi":"पहले से मौजूद गाइड"},"help":{"en":"When you are stuck","ur":"جب آپ اٹک جائیں","no":"Når du står fast","hi":"जब आप अटक जाएँ"},"leaders":{"en":"For team leaders","ur":"ٹیم لیڈرز کے لیے","no":"For teamledere","hi":"टीम लीडर्स के लिए"},"guide":{"en":"Opening your account, step by step","ur":"اکاؤنٹ کھولنے کا طریقہ، مرحلہ وار","no":"Slik åpner du kontoen, steg for steg","hi":"खाता खोलने का तरीका, चरण दर चरण"}},"steps":{"en":["Use your sponsor's link","Create your account","Link your broker account — this step matters","Verify your identity","Join the group"],"ur":["اپنے سپانسر کا لنک استعمال کریں","اپنا اکاؤنٹ بنائیں","اپنا بروکر اکاؤنٹ منسلک کریں — یہ مرحلہ اہم ہے","اپنی شناخت کی تصدیق کریں","گروپ میں شامل ہوں"],"no":["Bruk sponsorens lenke","Opprett kontoen","Koble meglerkontoen — dette steget er viktig","Bekreft identiteten din","Bli med i gruppa"],"hi":["अपने स्पॉन्सर का लिंक इस्तेमाल करें","अपना खाता बनाएँ","अपना ब्रोकर खाता जोड़ें — यह चरण महत्वपूर्ण है","अपनी पहचान सत्यापित करें","ग्रुप में शामिल हों"]},"earn":{"en":{"intro":"Four ways, and one warning. Your real numbers are only ever in your IB Portal — never in a chat message.","items":[["Rebate per lot","Part of the trading cost comes back on every lot your team trades. Paid on activity. No trading, no rebate."],["Profit share","When a strategy closes a winning trade, the profit is split. The trader keeps the largest share."],["Team bonuses","As your team grows, more of its levels count toward you. Your portal shows which are unlocked."],["Pools and campaigns","Leader pools and seasonal campaigns come and go. Read the current terms before you count on one."]],"warning":"Most people who trade lose money. Nobody here is promised an income, and yours can be nothing at all. That is the deal, stated plainly, before you put in anything."},"ur":{"intro":"چار راستے، اور ایک تنبیہ۔ آپ کے اصل اعداد صرف آپ کے آئی بی پورٹل میں ہوتے ہیں — کسی چیٹ پیغام میں نہیں۔","items":[["فی لاٹ ری بیٹ","آپ کی ٹیم کے ہر لاٹ پر ٹریڈنگ لاگت کا ایک حصہ واپس آتا ہے۔ سرگرمی پر ملتا ہے۔ ٹریڈنگ نہیں تو ری بیٹ نہیں۔"],["منافع میں حصہ","جب کوئی حکمت عملی نفع کے ساتھ ٹریڈ بند کرتی ہے تو منافع تقسیم ہوتا ہے۔ سب سے بڑا حصہ ٹریڈر کا رہتا ہے۔"],["ٹیم بونس","ٹیم بڑھنے کے ساتھ اس کی مزید سطحیں آپ کے لیے شمار ہوتی ہیں۔ پورٹل بتاتا ہے کون سی کھلی ہیں۔"],["پولز اور مہمات","لیڈر پولز اور موسمی مہمات آتی جاتی رہتی ہیں۔ بھروسہ کرنے سے پہلے موجودہ شرائط پڑھیں۔"]],"warning":"ٹریڈنگ کرنے والے زیادہ تر لوگ پیسے کھوتے ہیں۔ یہاں کسی کو آمدنی کا وعدہ نہیں، اور آپ کی کمائی صفر بھی ہو سکتی ہے۔ یہی اصل بات ہے، کچھ لگانے سے پہلے صاف صاف۔"},"no":{"intro":"Fire veier, og én advarsel. De virkelige tallene dine finnes bare i IB-portalen — aldri i en chatmelding.","items":[["Rebate per lot","Del av handelskostnaden kommer tilbake på hver lot teamet ditt handler. Betales på aktivitet. Ingen handel, ingen rebate."],["Profittdeling","Når en strategi lukker en handel med gevinst, deles profitten. Traderen beholder den største delen."],["Teambonus","Etter hvert som teamet vokser, teller flere av nivåene mot deg. Portalen viser hvilke som er låst opp."],["Potter og kampanjer","Lederpotter og sesongkampanjer kommer og går. Les gjeldende vilkår før du regner med en."]],"warning":"De fleste som handler taper penger. Ingen her er lovet inntekt, og din kan bli null. Det er avtalen, sagt rett ut, før du setter inn noe."},"hi":{"intro":"चार रास्ते, और एक चेतावनी। आपके असली आँकड़े सिर्फ़ आपके IB पोर्टल में होते हैं — किसी चैट संदेश में नहीं।","items":[["प्रति लॉट रिबेट","आपकी टीम द्वारा ट्रेड किए गए हर लॉट पर ट्रेडिंग लागत का एक हिस्सा वापस आता है। यह गतिविधि पर मिलता है। ट्रेडिंग नहीं तो रिबेट नहीं।"],["मुनाफ़े में हिस्सा","जब कोई रणनीति मुनाफ़े के साथ ट्रेड बंद करती है तो मुनाफ़ा बँटता है। सबसे बड़ा हिस्सा ट्रेडर का रहता है।"],["टीम बोनस","टीम बढ़ने के साथ उसके और स्तर आपके लिए गिने जाते हैं। पोर्टल बताता है कौन से खुले हैं।"],["पूल और अभियान","लीडर पूल और मौसमी अभियान आते-जाते रहते हैं। भरोसा करने से पहले मौजूदा शर्तें पढ़ें।"]],"warning":"ट्रेडिंग करने वाले ज़्यादातर लोग पैसे खोते हैं। यहाँ किसी को आय का वादा नहीं, और आपकी कमाई शून्य भी हो सकती है। कुछ लगाने से पहले यही सच्चाई है।"}},"values":{"en":[["A","Aspire","Dream big and go after it. Ambition is the entry fee, not the reward."],["I","Inspire","Share what you learn, including what went wrong. Lift the person next to you."],["M","Meritocracy","Work and skill get recognised. Where you come from does not decide what you can become."],["E","Empire","Built together, or not at all. Everyone belongs and everyone contributes."]],"ur":[["A","Aspire","بڑا خواب دیکھیں اور اس کے پیچھے جائیں۔ بلند حوصلگی داخلے کی فیس ہے، انعام نہیں۔"],["I","Inspire","جو سیکھیں وہ بانٹیں، بشمول وہ جو غلط ہوا۔ اپنے ساتھی کو اوپر اٹھائیں۔"],["M","Meritocracy","محنت اور مہارت کی قدر ہوتی ہے۔ آپ کہاں سے آئے، یہ طے نہیں کرتا کہ آپ کیا بن سکتے ہیں۔"],["E","Empire","مل کر بنے گا، ورنہ نہیں۔ ہر کوئی اپنا ہے اور ہر کوئی حصہ ڈالتا ہے۔"]],"no":[["A","Aspire","Drøm stort og gå etter det. Ambisjon er inngangsbilletten, ikke belønningen."],["I","Inspire","Del det du lærer, også det som gikk galt. Løft den ved siden av deg."],["M","Meritocracy","Arbeid og ferdighet blir sett. Hvor du kommer fra avgjør ikke hva du kan bli."],["E","Empire","Bygget sammen, ellers ikke i det hele tatt. Alle hører til, og alle bidrar."]],"hi":[["A","Aspire","बड़ा सपना देखें और उसके पीछे जाएँ। महत्वाकांक्षा प्रवेश शुल्क है, इनाम नहीं।"],["I","Inspire","जो सीखें वह बाँटें, जो ग़लत हुआ वह भी। अपने साथी को ऊपर उठाएँ।"],["M","Meritocracy","मेहनत और हुनर की क़द्र होती है। आप कहाँ से आए, यह तय नहीं करता कि आप क्या बन सकते हैं।"],["E","Empire","मिलकर बनेगा, वरना नहीं। हर कोई अपना है और हर कोई योगदान देता है।"]]},"leaders":{"en":{"title":"Turn your invite link into an Aimpire link","body":"Open the IB Portal, go to Profile, and copy your Partner or SonicFunnel link. Paste it here. You get one link that shows all of this in both languages and still registers people under you.","placeholder":"Paste your invite link","button":"Make my link","ok":"Copied. Share this one.","bad":"That is not a recognised invite link. It must start with https:// and come from your IB Portal profile."},"ur":{"title":"اپنے دعوتی لنک کو ایمپائر لنک بنائیں","body":"آئی بی پورٹل کھولیں، پروفائل میں جائیں، اور اپنا پارٹنر یا سونک فنل لنک کاپی کریں۔ یہاں پیسٹ کریں۔ آپ کو ایک لنک ملے گا جو یہ سب دونوں زبانوں میں دکھاتا ہے اور لوگ پھر بھی آپ کے نیچے رجسٹر ہوں گے۔","placeholder":"اپنا دعوتی لنک پیسٹ کریں","button":"میرا لنک بنائیں","ok":"کاپی ہو گیا۔ یہی شیئر کریں۔","bad":"یہ تسلیم شدہ دعوتی لنک نہیں ہے۔ یہ https:// سے شروع ہونا چاہیے اور آپ کے آئی بی پورٹل پروفائل سے آنا چاہیے۔"},"no":{"title":"Gjør invitasjonslenken din om til en Aimpire-lenke","body":"Åpne IB-portalen, gå til Profil, og kopier Partner- eller SonicFunnel-lenken din. Lim den inn her. Du får én lenke som viser alt dette på fire språk — og folk registreres fortsatt under deg.","placeholder":"Lim inn invitasjonslenken din","button":"Lag lenken min","ok":"Kopiert. Del denne.","bad":"Dette er ikke en gyldig invitasjonslenke. Den må starte med https:// og komme fra IB-portalprofilen din."},"hi":{"title":"अपने निमंत्रण लिंक को Aimpire लिंक बनाएँ","body":"IB पोर्टल खोलें, प्रोफ़ाइल में जाएँ, और अपना Partner या SonicFunnel लिंक कॉपी करें। उसे यहाँ पेस्ट करें। आपको एक लिंक मिलेगा जो यह सब चार भाषाओं में दिखाता है — और लोग फिर भी आपके नीचे पंजीकृत होंगे।","placeholder":"अपना निमंत्रण लिंक पेस्ट करें","button":"मेरा लिंक बनाएँ","ok":"कॉपी हो गया। यही साझा करें।","bad":"यह मान्य निमंत्रण लिंक नहीं है। यह https:// से शुरू होना चाहिए और आपके IB पोर्टल प्रोफ़ाइल से आना चाहिए।"}},"risk":{"en":"Trading carries risk and you can lose what you put in. Nothing here is financial advice and no income is promised. Only use money you can afford to lose, and check the rules where you live.","ur":"ٹریڈنگ میں خطرہ ہے اور آپ جو لگاتے ہیں وہ کھو سکتے ہیں۔ یہاں کچھ بھی مالی مشورہ نہیں اور کسی آمدنی کا وعدہ نہیں۔ صرف وہی رقم استعمال کریں جس کا نقصان برداشت کر سکیں، اور اپنے ملک کے قوانین دیکھیں۔","no":"Trading innebærer risiko, og du kan tape det du setter inn. Ingenting her er finansiell rådgivning, og ingen inntekt er lovet. Bruk bare penger du har råd til å tape, og sjekk reglene der du bor.","hi":"ट्रेडिंग में जोखिम है और आप जो लगाते हैं वह खो सकते हैं। यहाँ कुछ भी वित्तीय सलाह नहीं और किसी आय का वादा नहीं। केवल वही रकम लगाएँ जिसका नुक़सान आप सह सकें, और अपने देश के नियम देखें।"},"links":{"main":[{"url":"__REF__","primary":true,"en":["Open your account","Through your sponsor's link"],"ur":["اپنا اکاؤنٹ کھولیں","اپنے سپانسر کے لنک سے"],"no":["Åpne kontoen din","Via sponsorens lenke"],"hi":["अपना खाता खोलें","अपने स्पॉन्सर के लिंक से"]},{"url":"","en":["Join the group","Element X — where we actually talk"],"ur":["گروپ میں شامل ہوں","ایلیمنٹ ایکس — جہاں ہم اصل میں بات کرتے ہیں"],"no":["Bli med i gruppa","Element X — der vi faktisk snakker"],"hi":["ग्रुप में शामिल हों","Element X — जहाँ हम असल में बात करते हैं"]},{"url":"","en":["Weekly call","Sunday, 20:00 Pakistan time"],"ur":["ہفتہ وار کال","اتوار، رات 8 بجے پاکستان کا وقت"],"no":["Ukentlig call","Søndag kl. 20:00 pakistansk tid"],"hi":["साप्ताहिक कॉल","रविवार, रात 8 बजे पाकिस्तान समय"]}],"platform":[{"url":"https://aitech.ibportal.io/profile","en":["IB Portal","Your team, your commissions, your real numbers"],"ur":["آئی بی پورٹل","آپ کی ٹیم، آپ کا کمیشن، آپ کے اصل اعداد"],"no":["IB-portalen","Teamet ditt, provisjonen din, de virkelige tallene"],"hi":["IB पोर्टल","आपकी टीम, आपका कमीशन, आपके असली आँकड़े"]},{"url":"https://www.copyxapp.com","en":["CopyX","The copy-trading platform"],"ur":["کاپی ایکس","کاپی ٹریڈنگ پلیٹ فارم"],"no":["CopyX","Plattformen for kopihandel"],"hi":["CopyX","कॉपी ट्रेडिंग प्लेटफ़ॉर्म"]},{"url":"https://portal.tagmarkets.com/login?brd=1&wp=4","en":["Broker portal","Deposits, withdrawals, KYC"],"ur":["بروکر پورٹل","ڈپازٹ، رقم کی واپسی، کے وائی سی"],"no":["Meglerportalen","Innskudd, uttak, KYC"],"hi":["ब्रोकर पोर्टल","जमा, निकासी, KYC"]}],"video":[{"url":"","en":["Signing up","Three minutes, start to finish"],"ur":["سائن اپ کرنا","تین منٹ، شروع سے آخر تک"],"no":["Registrering","Tre minutter, fra start til slutt"],"hi":["साइन अप करना","तीन मिनट, शुरू से अंत तक"]},{"url":"","en":["Finishing KYC","Which documents, and why they ask"],"ur":["کے وائی سی مکمل کرنا","کون سی دستاویزات، اور کیوں مانگی جاتی ہیں"],"no":["Fullføre KYC","Hvilke dokumenter, og hvorfor de spør"],"hi":["KYC पूरा करना","कौन से दस्तावेज़, और क्यों माँगे जाते हैं"]},{"url":"","en":["Making a deposit","Getting money onto the account"],"ur":["ڈپازٹ کرنا","اکاؤنٹ میں رقم پہنچانا"],"no":["Sette inn penger","Få penger inn på kontoen"],"hi":["जमा करना","खाते में पैसे पहुँचाना"]},{"url":"","en":["Connecting CopyX","Linking your broker account"],"ur":["کاپی ایکس جوڑنا","اپنا بروکر اکاؤنٹ منسلک کرنا"],"no":["Koble til CopyX","Knytte meglerkontoen din"],"hi":["CopyX जोड़ना","अपना ब्रोकर खाता जोड़ना"]},{"url":"","en":["Taking money out","Do this early, with a small amount"],"ur":["رقم نکالنا","یہ جلدی کریں، تھوڑی رقم کے ساتھ"],"no":["Ta ut penger","Gjør det tidlig, med et lite beløp"],"hi":["पैसे निकालना","यह जल्दी करें, थोड़ी रकम के साथ"]}],"docs":[{"url":"https://intercom.help/tag-markets/en/articles/9678143-how-to-create-an-account-on-tagmarkets","en":["Create your broker account","Official guide from the broker"],"ur":["بروکر اکاؤنٹ بنائیں","بروکر کی سرکاری رہنمائی"],"no":["Opprett meglerkontoen","Offisiell guide fra megleren"],"hi":["ब्रोकर खाता बनाएँ","ब्रोकर की आधिकारिक गाइड"]},{"url":"https://intercom.help/tag-markets/en/articles/9670841-how-do-i-register-on-tag-markets","en":["Registering step by step","Official guide from the broker"],"ur":["مرحلہ وار رجسٹریشن","بروکر کی سرکاری رہنمائی"],"no":["Registrering steg for steg","Offisiell guide fra megleren"],"hi":["चरण दर चरण पंजीकरण","ब्रोकर की आधिकारिक गाइड"]},{"url":"https://intercom.help/tag-markets/en/articles/9703560-how-to-make-a-deposit","en":["How to make a deposit","Official guide from the broker"],"ur":["ڈپازٹ کیسے کریں","بروکر کی سرکاری رہنمائی"],"no":["Slik setter du inn penger","Offisiell guide fra megleren"],"hi":["जमा कैसे करें","ब्रोकर की आधिकारिक गाइड"]},{"url":"https://intercom.help/tag-markets/en/articles/9705803-how-to-make-a-withdrawal","en":["How to take money out","Do this early, with a small amount"],"ur":["رقم کیسے نکالیں","یہ جلدی کریں، تھوڑی رقم کے ساتھ"],"no":["Slik tar du ut penger","Gjør dette tidlig, med et lite beløp"],"hi":["पैसे कैसे निकालें","यह जल्दी करें, थोड़ी रकम के साथ"]},{"url":"","en":["Start here guide","PDF, English"],"ur":["ابتدائی رہنما","پی ڈی ایف، انگریزی"],"no":["Startguide","PDF"],"hi":["शुरुआती गाइड","PDF"]},{"url":"","en":["Start here guide","PDF, Urdu"],"ur":["ابتدائی رہنما","پی ڈی ایف، اردو"],"no":["Startguide","PDF"],"hi":["शुरुआती गाइड","PDF"]},{"url":"","en":["Pips and lot size","How much one move actually costs you"],"ur":["پپس اور لاٹ سائز","ایک حرکت آپ کو اصل میں کتنی پڑتی ہے"],"no":["Pips og lot size","Hva én bevegelse faktisk koster deg"],"hi":["पिप्स और लॉट साइज़","एक चाल असल में आपको कितनी पड़ती है"]},{"url":"","en":["Trading psychology","The part nobody wants to read"],"ur":["ٹریڈنگ نفسیات","وہ حصہ جو کوئی پڑھنا نہیں چاہتا"],"no":["Trading-psykologi","Delen ingen vil lese"],"hi":["ट्रेडिंग मनोविज्ञान","वह हिस्सा जो कोई पढ़ना नहीं चाहता"]}],"help":[{"url":"","en":["Ask your sponsor","The person who invited you"],"ur":["اپنے سپانسر سے پوچھیں","جس نے آپ کو مدعو کیا"],"no":["Spør sponsoren din","Den som inviterte deg"],"hi":["अपने स्पॉन्सर से पूछें","जिसने आपको आमंत्रित किया"]},{"url":"","en":["Common questions","Answered once, properly"],"ur":["عام سوالات","ایک بار، ٹھیک سے جواب دیے گئے"],"no":["Vanlige spørsmål","Besvart én gang, ordentlig"],"hi":["आम सवाल","एक बार, ठीक से उत्तर दिए गए"]},{"url":"https://intercom.help/tag-markets/en/articles/10088332-how-to-change-your-account-password","en":["Change your password","Do this if you ever shared it"],"ur":["اپنا پاس ورڈ بدلیں","اگر کبھی کسی کو بتایا ہو تو ضرور کریں"],"no":["Bytt passord","Gjør dette hvis du har delt det"],"hi":["अपना पासवर्ड बदलें","अगर कभी किसी को बताया हो तो ज़रूर करें"]},{"url":"https://intercom.help/tag-markets/en/articles/10313927-how-to-recover-the-dashboard-password","en":["Locked out of the dashboard","How to recover access"],"ur":["ڈیش بورڈ سے باہر؟","رسائی دوبارہ حاصل کرنے کا طریقہ"],"no":["Låst ute av dashbordet","Slik får du tilgang igjen"],"hi":["डैशबोर्ड से बाहर?","पहुँच वापस कैसे पाएँ"]}]},"guide":{"en":{"lede":"About two minutes. At the end your account is open and sent for verification.","steps":[["Use your sponsor's link","Open the link the person who invited you sent — theirs, not one from a group. The line above shows who your sign-up goes to. Check it says the right person."],["Create your account","Press the button below. Enter your name, email and phone. Use your real details — they have to match the ID you upload later. Choose a password you do not use anywhere else.",{"img":"assets/shot-register.jpg","alt":"The CopyX sign-up form","marks":[{"n":1,"x":24,"y":32,"t":"Your real name. It must match the ID you upload next, or verification fails."},{"n":2,"x":24,"y":45,"t":"A password you use nowhere else. Not your email password."},{"n":3,"x":9,"y":66,"t":"Tick both. Read them first — they say you can lose money."},{"n":4,"x":50,"y":87,"t":"No invitation code? You opened the wrong link. Ask your sponsor for theirs."}]}],["Link your broker account — this step matters","Once you are inside the portal, find the Register CopyX button and use that to create your Tag Markets account. Do not go to CopyX or the broker and sign up separately: an account made that way is not synchronised, and nothing will track correctly afterwards. There is a video for this step in eleven languages.",{"langlinks":[{"label":"English","url":"https://drive.google.com/file/d/1KrEU9XkoVflSNhCXUtmHzx-wY0q_RBB1/view"},{"label":"Hindi","url":"https://drive.google.com/file/d/1yvnfW9R7T930XvONOniniyG01_NZ8oV3/view"},{"label":"Arabic","url":"https://drive.google.com/file/d/1k83NV7L30iOLo3QVhPwYlThBa_3Fh4AK/view"},{"label":"Spanish","url":"https://drive.google.com/file/d/16B4kqBCqNjXsf6O6ZI1clhGHOBAzMr0E/view"},{"label":"German","url":"https://drive.google.com/file/d/1yVpI8lnB90RDO3-xjBupav2nFOHM2z1w/view"},{"label":"Italian","url":"https://drive.google.com/file/d/1cDSRVK_hKTMXMKIIbLSDbL0cp6dB2biH/view"},{"label":"Malay","url":"https://drive.google.com/file/d/1nJFXnT34GCNxd6KmESPUJgQL0EAjTREN/view"},{"label":"Chinese","url":"https://drive.google.com/file/d/1BqGCO1k17SgIvzOVt2x8aWZo2z3Vtc3O/view"},{"label":"Japanese","url":"https://drive.google.com/file/d/1oa8iVP1MuYU8YTldg40CbFJbwPfCWBqU/view"},{"label":"Korean","url":"https://drive.google.com/file/d/1Gnv4ZCi6cileBVRQ4tni6wzwnWvr7cUN/view"},{"label":"Croatian","url":"https://drive.google.com/file/d/13Lu_3Cjoc1xkCAAZi8JP6a8nApY3ZtAE/view"}],"note":"The portal says it plainly: register your Tag Markets account exclusively using that button."}],["Verify your identity","You will need your ID card or passport, and something showing your address. Photograph them in good light with all four corners visible. A blurry photo is the main reason people get rejected — not anything serious."],["Join the group","That is where questions get answered. When you fund the account later, start with a small amount. Trading carries risk and you can lose what you put in."]]},"ur":{"lede":"تقریباً دو منٹ۔ آخر میں آپ کا اکاؤنٹ کھل جائے گا اور تصدیق کے لیے چلا جائے گا۔","steps":[["اپنے سپانسر کا لنک استعمال کریں","وہ لنک کھولیں جو آپ کو مدعو کرنے والے نے بھیجا — انہی کا، کسی گروپ کا نہیں۔ اوپر والی سطر بتاتی ہے کہ آپ کی رجسٹریشن کس کے پاس جا رہی ہے۔ دیکھ لیں کہ درست شخص لکھا ہے۔"],["اپنا اکاؤنٹ بنائیں","نیچے والا بٹن دبائیں۔ اپنا نام، ای میل اور فون نمبر لکھیں۔ اصل معلومات دیں — انہیں اُس شناختی کارڈ سے ملنا چاہیے جو آپ بعد میں اپ لوڈ کریں گے۔ ایسا پاس ورڈ چنیں جو آپ کہیں اور استعمال نہیں کرتے۔",{"img":"assets/shot-register.jpg","alt":"کاپی ایکس کا سائن اپ فارم","marks":[{"n":1,"x":24,"y":32,"t":"اپنا اصل نام۔ یہ اُس شناختی کارڈ سے ملنا چاہیے جو آگے اپ لوڈ کریں گے، ورنہ تصدیق ناکام ہوگی۔"},{"n":2,"x":24,"y":45,"t":"ایسا پاس ورڈ جو آپ کہیں اور استعمال نہیں کرتے۔ ای میل کا پاس ورڈ نہیں۔"},{"n":3,"x":9,"y":66,"t":"دونوں پر نشان لگائیں۔ پہلے پڑھیں — ان میں لکھا ہے کہ آپ رقم کھو سکتے ہیں۔"},{"n":4,"x":50,"y":87,"t":"دعوتی کوڈ نہیں؟ آپ نے غلط لنک کھولا۔ اپنے سپانسر سے اُن کا لنک مانگیں۔"}]}],["اپنا بروکر اکاؤنٹ منسلک کریں — یہ مرحلہ اہم ہے","پورٹل میں داخل ہونے کے بعد Register CopyX کا بٹن تلاش کریں اور اسی سے اپنا ٹیگ مارکیٹس اکاؤنٹ بنائیں۔ کاپی ایکس یا بروکر پر جا کر الگ سے سائن اپ نہ کریں: اس طرح بنایا گیا اکاؤنٹ منسلک نہیں ہوتا، اور بعد میں کچھ بھی درست شمار نہیں ہوگا۔ اس مرحلے کی ویڈیو گیارہ زبانوں میں موجود ہے۔",{"langlinks":[{"label":"English","url":"https://drive.google.com/file/d/1KrEU9XkoVflSNhCXUtmHzx-wY0q_RBB1/view"},{"label":"Hindi","url":"https://drive.google.com/file/d/1yvnfW9R7T930XvONOniniyG01_NZ8oV3/view"},{"label":"Arabic","url":"https://drive.google.com/file/d/1k83NV7L30iOLo3QVhPwYlThBa_3Fh4AK/view"},{"label":"Spanish","url":"https://drive.google.com/file/d/16B4kqBCqNjXsf6O6ZI1clhGHOBAzMr0E/view"},{"label":"German","url":"https://drive.google.com/file/d/1yVpI8lnB90RDO3-xjBupav2nFOHM2z1w/view"},{"label":"Italian","url":"https://drive.google.com/file/d/1cDSRVK_hKTMXMKIIbLSDbL0cp6dB2biH/view"},{"label":"Malay","url":"https://drive.google.com/file/d/1nJFXnT34GCNxd6KmESPUJgQL0EAjTREN/view"},{"label":"Chinese","url":"https://drive.google.com/file/d/1BqGCO1k17SgIvzOVt2x8aWZo2z3Vtc3O/view"},{"label":"Japanese","url":"https://drive.google.com/file/d/1oa8iVP1MuYU8YTldg40CbFJbwPfCWBqU/view"},{"label":"Korean","url":"https://drive.google.com/file/d/1Gnv4ZCi6cileBVRQ4tni6wzwnWvr7cUN/view"},{"label":"Croatian","url":"https://drive.google.com/file/d/13Lu_3Cjoc1xkCAAZi8JP6a8nApY3ZtAE/view"}],"note":"پورٹل خود صاف لکھتا ہے: اپنا ٹیگ مارکیٹس اکاؤنٹ صرف اُسی بٹن سے بنائیں۔"}],["اپنی شناخت کی تصدیق کریں","آپ کو شناختی کارڈ یا پاسپورٹ چاہیے، اور پتے کا کوئی ثبوت۔ اچھی روشنی میں تصویر لیں، چاروں کونے نظر آئیں۔ دھندلی تصویر ہی سب سے بڑی وجہ ہے جس سے درخواست مسترد ہوتی ہے — کوئی سنگین بات نہیں۔"],["گروپ میں شامل ہوں","سوالات کے جواب وہیں ملتے ہیں۔ بعد میں جب آپ اکاؤنٹ میں پیسے ڈالیں تو تھوڑی رقم سے شروع کریں۔ ٹریڈنگ میں خطرہ ہے اور آپ اپنی لگائی ہوئی رقم کھو سکتے ہیں۔"]]},"no":{"lede":"Rundt to minutter. Til slutt er kontoen opprettet og sendt til godkjenning.","steps":[["Bruk sponsorens lenke","Åpne lenken fra den som inviterte deg — deres, ikke en fra en gruppe. Linjen over viser hvem registreringen går til. Sjekk at det er riktig person."],["Opprett kontoen","Trykk knappen under. Fyll inn navn, e-post og telefon. Bruk ekte opplysninger — de må stemme med ID-en du laster opp senere. Velg et passord du ikke bruker noe annet sted.",{"img":"assets/shot-register.jpg","alt":"The CopyX sign-up form","marks":[{"n":1,"x":24,"y":32,"t":"Your real name. It must match the ID you upload next, or verification fails."},{"n":2,"x":24,"y":45,"t":"A password you use nowhere else. Not your email password."},{"n":3,"x":9,"y":66,"t":"Tick both. Read them first — they say you can lose money."},{"n":4,"x":50,"y":87,"t":"No invitation code? You opened the wrong link. Ask your sponsor for theirs."}]}],["Koble meglerkontoen — dette steget er viktig","Når du er inne i portalen, finn knappen Register CopyX og bruk den til å opprette Tag Markets-kontoen. Ikke gå til CopyX eller megleren og registrer deg separat: en konto laget slik blir ikke synkronisert, og ingenting spores riktig etterpå. Det finnes video for dette steget på elleve språk.",{"langlinks":[{"label":"English","url":"https://drive.google.com/file/d/1KrEU9XkoVflSNhCXUtmHzx-wY0q_RBB1/view"},{"label":"Hindi","url":"https://drive.google.com/file/d/1yvnfW9R7T930XvONOniniyG01_NZ8oV3/view"},{"label":"Arabic","url":"https://drive.google.com/file/d/1k83NV7L30iOLo3QVhPwYlThBa_3Fh4AK/view"},{"label":"Spanish","url":"https://drive.google.com/file/d/16B4kqBCqNjXsf6O6ZI1clhGHOBAzMr0E/view"},{"label":"German","url":"https://drive.google.com/file/d/1yVpI8lnB90RDO3-xjBupav2nFOHM2z1w/view"},{"label":"Italian","url":"https://drive.google.com/file/d/1cDSRVK_hKTMXMKIIbLSDbL0cp6dB2biH/view"},{"label":"Malay","url":"https://drive.google.com/file/d/1nJFXnT34GCNxd6KmESPUJgQL0EAjTREN/view"},{"label":"Chinese","url":"https://drive.google.com/file/d/1BqGCO1k17SgIvzOVt2x8aWZo2z3Vtc3O/view"},{"label":"Japanese","url":"https://drive.google.com/file/d/1oa8iVP1MuYU8YTldg40CbFJbwPfCWBqU/view"},{"label":"Korean","url":"https://drive.google.com/file/d/1Gnv4ZCi6cileBVRQ4tni6wzwnWvr7cUN/view"},{"label":"Croatian","url":"https://drive.google.com/file/d/13Lu_3Cjoc1xkCAAZi8JP6a8nApY3ZtAE/view"}],"note":"The portal says it plainly: register your Tag Markets account exclusively using that button."}],["Bekreft identiteten din","Du trenger ID-kort eller pass, og noe som viser adressen din. Fotografer dem i godt lys med alle fire hjørner synlige. Uskarpt bilde er den vanligste grunnen til avslag — ikke noe alvorlig."],["Bli med i gruppa","Det er der spørsmål blir besvart. Når du senere setter inn penger, start med et lite beløp. Trading innebærer risiko, og du kan tape det du setter inn."]]},"hi":{"lede":"लगभग दो मिनट। अंत में आपका खाता खुल जाएगा और सत्यापन के लिए भेज दिया जाएगा।","steps":[["अपने स्पॉन्सर का लिंक इस्तेमाल करें","वही लिंक खोलें जो आपको आमंत्रित करने वाले ने भेजा — उन्हीं का, किसी ग्रुप का नहीं। ऊपर की पंक्ति बताती है कि आपका पंजीकरण किसके पास जा रहा है। जाँच लें कि सही व्यक्ति लिखा है।"],["अपना खाता बनाएँ","नीचे का बटन दबाएँ। अपना नाम, ईमेल और फ़ोन नंबर भरें। असली जानकारी दें — यह उस पहचान पत्र से मेल खानी चाहिए जो आप आगे अपलोड करेंगे। ऐसा पासवर्ड चुनें जो आप कहीं और इस्तेमाल नहीं करते।",{"img":"assets/shot-register.jpg","alt":"The CopyX sign-up form","marks":[{"n":1,"x":24,"y":32,"t":"Your real name. It must match the ID you upload next, or verification fails."},{"n":2,"x":24,"y":45,"t":"A password you use nowhere else. Not your email password."},{"n":3,"x":9,"y":66,"t":"Tick both. Read them first — they say you can lose money."},{"n":4,"x":50,"y":87,"t":"No invitation code? You opened the wrong link. Ask your sponsor for theirs."}]}],["अपना ब्रोकर खाता जोड़ें — यह चरण महत्वपूर्ण है","पोर्टल में पहुँचने के बाद Register CopyX बटन ढूँढें और उसी से अपना Tag Markets खाता बनाएँ। CopyX या ब्रोकर पर जाकर अलग से साइन अप न करें: इस तरह बना खाता सिंक नहीं होता, और बाद में कुछ भी सही दर्ज नहीं होगा। इस चरण का वीडियो ग्यारह भाषाओं में मौजूद है।",{"langlinks":[{"label":"English","url":"https://drive.google.com/file/d/1KrEU9XkoVflSNhCXUtmHzx-wY0q_RBB1/view"},{"label":"Hindi","url":"https://drive.google.com/file/d/1yvnfW9R7T930XvONOniniyG01_NZ8oV3/view"},{"label":"Arabic","url":"https://drive.google.com/file/d/1k83NV7L30iOLo3QVhPwYlThBa_3Fh4AK/view"},{"label":"Spanish","url":"https://drive.google.com/file/d/16B4kqBCqNjXsf6O6ZI1clhGHOBAzMr0E/view"},{"label":"German","url":"https://drive.google.com/file/d/1yVpI8lnB90RDO3-xjBupav2nFOHM2z1w/view"},{"label":"Italian","url":"https://drive.google.com/file/d/1cDSRVK_hKTMXMKIIbLSDbL0cp6dB2biH/view"},{"label":"Malay","url":"https://drive.google.com/file/d/1nJFXnT34GCNxd6KmESPUJgQL0EAjTREN/view"},{"label":"Chinese","url":"https://drive.google.com/file/d/1BqGCO1k17SgIvzOVt2x8aWZo2z3Vtc3O/view"},{"label":"Japanese","url":"https://drive.google.com/file/d/1oa8iVP1MuYU8YTldg40CbFJbwPfCWBqU/view"},{"label":"Korean","url":"https://drive.google.com/file/d/1Gnv4ZCi6cileBVRQ4tni6wzwnWvr7cUN/view"},{"label":"Croatian","url":"https://drive.google.com/file/d/13Lu_3Cjoc1xkCAAZi8JP6a8nApY3ZtAE/view"}],"note":"The portal says it plainly: register your Tag Markets account exclusively using that button."}],["अपनी पहचान सत्यापित करें","आपको पहचान पत्र या पासपोर्ट चाहिए, और पते का कोई प्रमाण। अच्छी रोशनी में तस्वीर लें, चारों कोने दिखें। धुँधली तस्वीर ही अस्वीकृति का सबसे बड़ा कारण है — कोई गंभीर बात नहीं।"],["ग्रुप में शामिल हों","सवालों के जवाब वहीं मिलते हैं। बाद में जब आप खाते में पैसे डालें तो थोड़ी रकम से शुरू करें। ट्रेडिंग में जोखिम है और आप अपनी लगाई रकम खो सकते हैं।"]]}},"langs":[{"code":"en","label":"English","dir":"ltr","font":"latin"},{"code":"no","label":"Norsk","dir":"ltr","font":"latin"},{"code":"hi","label":"हिन्दी","dir":"ltr","font":"deva"},{"code":"ur","label":"اردو","dir":"rtl","font":"nastaliq"}]};
+
+/* An IB's sign-up link carries an opaque token (?e=...), not their IB number,
+   so the whole link travels as ?ref= and only these hosts are accepted. */
+const REF_ALLOWED_HOSTS = ["aitech.sonicpilot.io","copyxapp.com","www.copyxapp.com",
+                           "aitech.ibportal.io","portal.tagmarkets.com","tagmarkets.com"];
+const REF_HOUSE = "";
+
+let lang = C.langs[0].code, sponsorUrl = null, pendingRef = null;
+const $ = id => document.getElementById(id);
+const conf = code => C.langs.find(l => l.code === code) || C.langs[0];
+function store(k,v){ try{ v===null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(e){} }
+function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+/* Nothing becomes an href unless it is plain http(s). */
+function safeUrl(u){
+  try{ const p = new URL(String(u), location.href).protocol;
+       return p === "https:" || p === "http:"; }catch(e){ return false; }
+}
+/* Images belong to this page. Anything off-origin is skipped. */
+function sameOrigin(u){
+  try{ return new URL(String(u), location.href).origin === location.origin; }catch(e){ return false; }
+}
+function validRef(raw){
+  if(!raw) return null;
+  let u;
+  try{ u = new URL(String(raw).trim()); }catch(e){ return null; }
+  if(u.protocol !== "https:") return null;
+  return REF_ALLOWED_HOSTS.indexOf(u.hostname) !== -1 ? u : null;
+}
+const urlRef    = () => validRef(new URLSearchParams(location.search).get("ref"));
+const storedRef = () => validRef(load("aimpire.ref"));
+function fingerprint(u){
+  const t = u.searchParams.get("e") || u.search || u.pathname;
+  return String(t).replace(/[^A-Za-z0-9]/g,"").slice(-6).toUpperCase();
+}
+
+/* Decided once, on load. Rendering never writes. A different link does not
+   silently replace a remembered sponsor — that would let anyone re-tag
+   someone else's lead just by having them open a page. We ask. */
+function initSponsor(){
+  const fromUrl = urlRef(), remembered = storedRef();
+  if(!fromUrl){ sponsorUrl = remembered; return; }
+  if(!remembered){ store("aimpire.ref", fromUrl.href); sponsorUrl = fromUrl; }
+  else if(remembered.href === fromUrl.href){ sponsorUrl = remembered; }
+  else { sponsorUrl = remembered; pendingRef = fromUrl; }
+}
+function keepSponsor(){ pendingRef = null; render(); }
+function switchSponsor(){
+  if(pendingRef){ store("aimpire.ref", pendingRef.href); sponsorUrl = pendingRef; pendingRef = null; }
+  render();
+}
+function changeSponsor(){
+  store("aimpire.ref", null); sponsorUrl = null; pendingRef = null;
+  if(location.search) history.replaceState(null,"",location.pathname);
+  render();
+}
+function destination(){
+  return sponsorUrl
+    ? { url:sponsorUrl.href, host:sponsorUrl.hostname, fp:fingerprint(sponsorUrl) }
+    : { url:REF_HOUSE, host:null, fp:null };
+}
+
+function makeLink(){
+  const u = validRef($("ld-in").value), out = $("ld-out"), L = C.leaders[lang] || C.leaders.en;
+  out.hidden = false; out.textContent = "";
+  const b = document.createElement("b");
+  if(!u){ out.className = "out bad"; b.textContent = L.bad; out.appendChild(b); return; }
+  out.className = "out";
+  b.textContent = L.ok; out.appendChild(b);
+  const link = location.origin + location.pathname + "?ref=" + encodeURIComponent(u.href);
+  out.appendChild(document.createTextNode(link));
+  try{ navigator.clipboard.writeText(link); }catch(e){}
+}
+
+function el(tag, cls, text){
+  const n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(text !== undefined) n.textContent = text;
+  return n;
+}
+
+function rowsFor(items, dest){
+  const frag = document.createDocumentFragment();
+  const list = el("div","rows");
+  let any = false;
+  items.forEach(function(i){
+    const href = i.url === "__REF__" ? dest.url : i.url;
+    if(!href || !safeUrl(href)) return;
+    const pair = i[lang] || i.en;
+    any = true;
+    const a = el("a", i.primary ? "slab" : "row");
+    a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.appendChild(el("span","t",pair[0]));
+    a.appendChild(el("span","s",pair[1]));
+    if(i.primary){ frag.appendChild(a); }
+    else { a.appendChild(el("span","go","›")); list.appendChild(a); }
+  });
+  if(list.children.length) frag.appendChild(list);
+  return any ? frag : null;
+}
+
+function render(){
+  const dest = destination();
+
+  $("h1").textContent = C.hero[lang].line1;
+  $("h2").textContent = C.hero[lang].line2;
+  $("hsub").textContent = C.hero[lang].sub;
+
+  Object.keys(C.sections).forEach(function(k){
+    const h = $("t-" + k);
+    if(!h) return;
+    h.textContent = C.sections[k][lang] || C.sections[k].en;
+    h.appendChild(document.createElement("b"));
+  });
+
+  const S = C.sponsor[lang] || C.sponsor.en;
+  const sp = $("spon"); sp.textContent = "";
+  if(dest.host){
+    sp.hidden = false;
+    sp.appendChild(document.createTextNode(S.goes_to + " "));
+    sp.appendChild(el("strong",null,dest.host));
+    sp.appendChild(document.createTextNode(" " + S.fingerprint + " "));
+    sp.appendChild(el("span","fp",dest.fp));
+    sp.appendChild(document.createTextNode(" "));
+    const c = el("button",null,S.change); c.onclick = changeSponsor; sp.appendChild(c);
+  } else { sp.hidden = true; }
+
+  const none = $("notice-none"), cf = $("notice-conflict");
+  none.hidden = !(!sponsorUrl && !REF_HOUSE && !pendingRef);
+  if(!none.hidden){
+    $("nn-t").textContent = S.none_title;
+    $("nn-b").textContent = S.none_body;
+    $("nn-f").textContent = S.none_foot;
+  }
+  cf.hidden = !pendingRef;
+  if(pendingRef){
+    const A = fingerprint(sponsorUrl), B = fingerprint(pendingRef);
+    $("nc-t").textContent = S.conflict.replace("{A}",A).replace("{B}",B);
+    const k = $("nc-keep"), u = $("nc-use");
+    k.textContent = S.keep.replace("{A}",A); k.onclick = keepSponsor;
+    u.textContent = S.use.replace("{B}",B);  u.onclick = switchSponsor;
+  }
+
+  ["main","platform","video","docs","help"].forEach(function(key){
+    const host = $(key + "-links"); if(!host) return;
+    host.textContent = "";
+    const frag = rowsFor(C.links[key], dest);
+    if(frag) host.appendChild(frag);
+    const sec = $("s-" + key);
+    if(sec && key !== "main") sec.hidden = !frag;
+  });
+
+  const G = C.guide[lang] || C.guide.en;
+  $("guide-lede").textContent = G.lede;
+  const gl = $("guide"); gl.textContent = "";
+  G.steps.forEach(function(st){
+    const li = document.createElement("li");
+    li.appendChild(el("h3",null,st[0]));
+    li.appendChild(el("p",null,st[1]));
+    const x = st[2];
+    if(x && x.langlinks){
+      if(x.note) li.appendChild(el("p","vnote",x.note));
+      const row = el("div","langs");
+      x.langlinks.forEach(function(L){
+        if(!safeUrl(L.url)) return;
+        const a = el("a",null,L.label);
+        a.href = L.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+        row.appendChild(a);
+      });
+      if(row.children.length) li.appendChild(row);
+    }
+    if(x && x.img && sameOrigin(x.img)){
+      const fig = el("div","shot");
+      const im = document.createElement("img");
+      im.src = x.img; im.alt = x.alt || ""; im.loading = "lazy";
+      fig.appendChild(im);
+      (x.marks || []).forEach(function(m){
+        const pin = el("span","pin",String(m.n));
+        pin.style.insetInlineStart = m.x + "%"; pin.style.top = m.y + "%";
+        fig.appendChild(pin);
+      });
+      li.appendChild(fig);
+      if(x.marks && x.marks.length){
+        const ul = el("ul","keys");
+        x.marks.forEach(function(m){ ul.appendChild(el("li",null,m.t)); });
+        li.appendChild(ul);
+      }
+    }
+    gl.appendChild(li);
+  });
+
+  const E = C.earn[lang] || C.earn.en;
+  $("earn-lede").textContent = E.intro;
+  const le = $("earn-list"); le.textContent = "";
+  E.items.forEach(function(it){
+    const li = document.createElement("li");
+    li.appendChild(el("h3",null,it[0]));
+    li.appendChild(el("p",null,it[1]));
+    le.appendChild(li);
+  });
+  $("earn-warn").textContent = E.warning;
+
+  const tl = $("tiers"); tl.textContent = "";
+  (C.values[lang] || C.values.en).forEach(function(v){
+    const li = document.createElement("li");
+    li.appendChild(el("span","ltr",v[0]));
+    const box = document.createElement("div");
+    box.appendChild(el("h3",null,v[1]));
+    box.appendChild(el("p",null,v[2]));
+    li.appendChild(box); tl.appendChild(li);
+  });
+
+  const L = C.leaders[lang] || C.leaders.en;
+  $("ld-body").textContent = L.body;
+  $("ld-in").placeholder = L.placeholder;
+  $("ld-btn").textContent = L.button;
+
+  $("risk").textContent = C.risk[lang] || C.risk.en;
+  $("yr").textContent = new Date().getFullYear();
+}
+
+function buildSwitch(){
+  const nav = $("switch"); nav.textContent = "";
+  C.langs.forEach(function(L){
+    const b = el("button",null,L.label);
+    b.id = "L-" + L.code;
+    b.setAttribute("aria-pressed", String(L.code === lang));
+    b.onclick = function(){ setLang(L.code); };
+    nav.appendChild(b);
+  });
+  const th = el("button","thm","◐");
+  th.setAttribute("aria-label","Light or dark");
+  th.onclick = toggleTheme;
+  nav.appendChild(th);
+}
+
+function setLang(code){
+  const L = conf(code);
+  lang = L.code;
+  document.documentElement.lang = L.code;
+  document.documentElement.dir = L.dir;
+  document.documentElement.setAttribute("data-font", L.font);
+  C.langs.forEach(function(x){
+    const b = $("L-" + x.code);
+    if(b) b.setAttribute("aria-pressed", String(x.code === lang));
+  });
+  store("aimpire.lang", lang);
+  render();
+}
+function toggleTheme(){
+  const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", next);
+  store("aimpire.theme", next);
+}
+(function(){
+  const th = load("aimpire.theme");
+  if(th) document.documentElement.setAttribute("data-theme", th);
+  let l = load("aimpire.lang");
+  if(!C.langs.some(function(x){ return x.code === l; })){
+    const nav = ((navigator.language || "") + " " + (navigator.languages || []).join(" ")).toLowerCase();
+    const hit = C.langs.find(function(x){ return new RegExp("\\b" + x.code + "\\b|" + x.code + "-").test(nav); });
+    l = hit ? hit.code : C.langs[0].code;
+  }
+  initSponsor();
+  buildSwitch();
+  setLang(l);
+})();
+</script>
+</body>
+</html>
