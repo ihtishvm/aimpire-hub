@@ -97,10 +97,24 @@ html[dir="rtl"] .sky{background:
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--ink);color:var(--chalk);font-family:var(--face);
-  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-html[data-font="nastaliq"] body{line-height:2.15}
+  font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* Nastaliq stabler bokstavformer vertikalt INNE i linja, saa 14px nastaliq
+   har omtrent samme detaljnivaa som 10px latinsk. Maalt foer endring:
+   guidetekst 15,2px, markoerforklaringer 14,08px — saa vidt lesbart.
+   Roten loeftes per skriftsystem, og alle rem-verdier foelger med. */
+html[data-font="nastaliq"]{font-size:19.5px}
+html[data-font="naskh"]{font-size:18px}
+html[data-font="deva"]{font-size:17.5px}
+html[data-font="nastaliq"] body{line-height:2.1}
 html[data-font="naskh"] body{line-height:1.9}
 html[data-font="deva"] body{line-height:1.8}
+/* Noto Nastaliq Urdu finnes i 400 og 700. Ber vi om 800 eller 900, lager
+   nettleseren syntetisk fet — og paa en skrift der strekene allerede
+   overlapper, smoerer det teksten ut i stedet for aa framheve den. */
+html[data-font="nastaliq"] h1,html[data-font="nastaliq"] h2,
+html[data-font="nastaliq"] h3,html[data-font="nastaliq"] strong,
+html[data-font="nastaliq"] b,html[data-font="nastaliq"] .t,
+html[data-font="nastaliq"] .wm{font-weight:700}
 .shell{max-width:46rem;margin:0 auto;padding:0 clamp(18px,5vw,40px) 72px}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
@@ -192,15 +206,21 @@ html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-fo
 .slab:hover,.slab:focus-visible{filter:brightness(1.12)}
 
 /* ruled link rows */
-.rows{border-top:1px solid var(--rule)}
-.row{display:flex;align-items:baseline;gap:14px;padding:16px 2px;
-  border-bottom:1px solid var(--rule);text-decoration:none;color:inherit}
-.row .t{font-weight:700;font-size:1.04rem;letter-spacing:-.01em}
+/* Rader paa blaa grunn saa ut som tekst. Naa er de et hvitt kort med
+   egne rader, tittelen i lenkefargen og et stoerre, tydeligere maal. */
+.rows{background:var(--ink-deep);border:1px solid var(--rule);border-radius:8px;
+  overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:15px 16px;
+  border-top:1px solid var(--rule);text-decoration:none;color:inherit;min-height:60px}
+.row:first-child{border-top:0}
+.row .t{font-weight:700;font-size:1.04rem;letter-spacing:-.01em;color:var(--gold-soft)}
 .row .s{color:var(--chalk-dim);font-size:.88rem;flex:1}
-.row:hover .t,.row:focus-visible .t{color:var(--gold-soft)}
-.row .go{color:var(--rule);font-weight:700;font-family:"Montserrat",sans-serif}
-.row:hover .go{color:var(--gold)}
+.row:hover,.row:focus-visible{background:#F3F8FF}
+.row .go{color:var(--gold);font-weight:800;font-size:1.25rem;font-family:var(--display);
+  flex:0 0 auto;line-height:1}
 html[dir="rtl"] .row .go{transform:scaleX(-1)}
+:root[data-theme="dark"] .row:hover,:root[data-theme="dark"] .row:focus-visible{
+  background:var(--ink-raise)}
 
 /* short list */
 .rail{list-style:none;margin:0;padding:0;position:relative;counter-reset:n}
@@ -227,7 +247,14 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
   color:var(--jet);display:grid;place-items:center;font:800 .85rem/1 var(--display);
   font-variant-numeric:tabular-nums;cursor:pointer;padding:0}
 .tick[aria-pressed="true"]{background:var(--jet);color:var(--gold-metal)}
-.guide > li.done h3,.guide > li.done > p{opacity:.5}
+/* Dimming av avhukede steg var feil paa to maater: paa nastaliq og naskh
+   blir allerede fine streker uleselige ved 50 % opasitet, og man maa kunne
+   lese om igjen et steg man har gjort. Fullfoeringen vises paa sirkelen
+   alene — teksten staar i full styrke. */
+.guide > li.done h3{color:var(--chalk-dim)}
+.tick[aria-pressed="true"]::after{content:"";position:absolute;inset:0;
+  border-radius:50%;box-shadow:0 0 0 3px var(--gold-metal)}
+.tick{position:absolute}
 .prog{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 20px;
   font-family:var(--mono);font-size:.82rem;color:var(--chalk-dim)}
 .prog .bar{flex:1 1 120px;height:4px;background:var(--rule);border-radius:999px;
@@ -262,8 +289,13 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
 .guide p{margin:0;color:var(--chalk-dim);font-size:.95rem}
 
 /* language chips for the partner's own videos */
-.vnote{margin:12px 0 0;padding:11px 14px;background:var(--ink-deep);
-  border-inline-start:3px solid var(--gold);font-size:.86rem;color:var(--chalk-dim)}
+/* «Husk dette» skal leses foer broedteksten rundt, ikke etter. Gul kant
+   og hvit flate loefter den ut, og den staar i full tekstfarge — ikke
+   dempet, slik den gjorde foer. */
+.vnote{margin:13px 0 0;padding:13px 15px;background:var(--ink-deep);
+  border:1px solid var(--rule);border-inline-start:4px solid var(--gold-metal);
+  border-radius:0 6px 6px 0;font-size:.9rem;color:var(--chalk);font-weight:500}
+html[dir="rtl"] .vnote{border-radius:6px 0 0 6px}
 .langs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
 .langs a{display:inline-block;padding:7px 12px;border:1px solid var(--rule);border-radius:999px;
   font-size:.82rem;font-weight:600;text-decoration:none;color:var(--chalk-dim);
@@ -292,8 +324,12 @@ html[dir="rtl"] .pin{transform:translate(50%,-50%)}
   width:8px;height:8px;background:var(--gold)}
 .earn h3{margin:0 0 3px;font-size:1.04rem;font-weight:700;letter-spacing:-.01em}
 .earn p{margin:0;color:var(--chalk-dim);font-size:.93rem}
-.warn{max-width:var(--measure);margin:8px 0 0;padding:18px 20px;background:var(--ink-deep);
-  border-inline-start:3px solid var(--gold);font-size:.93rem}
+.warn{max-width:var(--measure);margin:10px 0 0;padding:18px 20px;background:#FFF4EC;
+  border:1px solid #F0D3BE;border-inline-start:4px solid var(--ember);
+  border-radius:0 6px 6px 0;font-size:.93rem;color:var(--chalk)}
+html[dir="rtl"] .warn{border-radius:6px 0 0 6px}
+:root[data-theme="dark"] .warn{background:var(--ink-raise);border-color:var(--rule);
+  border-inline-start-color:var(--ember)}
 
 /* values — tiers that widen */
 .tiers{margin:0;padding:0;list-style:none}
