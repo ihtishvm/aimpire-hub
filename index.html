@@ -29,16 +29,17 @@
    Variabelnavnene er beholdt fra den moerke paletten, saa de ~90
    bruksstedene ikke maatte roeres. Kontrasttall i kommentar per linje. */
 :root{
-  --ink:#FFFFFF;            /* sideflate                                   */
-  --ink-deep:#F1F7FF;       /* hevet flate: kort, varsler, bilderammer     */
+  --ink:#EBF1FB;            /* sideflate: rolig blaa, ikke hvit            */
+  --ink-deep:#FFFFFF;       /* kortene loefter seg til hvitt mot den blaa   */
   --ink-raise:#FFFFFF;      /* kort som baerer egen kantlinje              */
   --gold:#006EFD;           /* FLATEfarge: knapp, aktiv fane, 2px-marg     */
   --gold-soft:#064492;      /* TEKSTfarge for blaatt: 9,33:1 mot hvitt     */
   --gold-deep:#064492;
   --lime:#0F7A4A; --red:#C0392B;
   --chalk:#0A1A2F;          /* overskrifter og broedtekst: 17,48:1         */
-  --chalk-dim:#55697F;      /* sekundaer: 5,66:1 - aldri under 16px        */
-  --rule:#DCE8FA;           /* dekorative hairlines                        */
+  --chalk-dim:#49596E;      /* all guidetekst bruker denne - moerknet da   */
+                            /* grunnen ble blaa og 5,66 falt til 4,98      */
+  --rule:#C9D8EF;           /* hairlines - moerknet for aa synes paa blaa   */
   --edge-ui:#7E90A6;        /* kant paa felt og knapper som MAA ses        */
   --ember:#C24F15;          /* den sparsomme oransjen: risiko, «etterpaa»  */
   --gold-metal:#E8B84B;     /* FLATE: markoerer og stegtall - «se her»     */
@@ -78,10 +79,10 @@ html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
   pointer-events:none;transform:translate3d(0,0,0);
   background:
     radial-gradient(120% 86% at 16% -12%, #2B87FD 0%, rgba(87,160,254,.55) 34%, rgba(128,183,254,0) 68%),
-    linear-gradient(180deg, rgba(241,247,255,.9) 0%, rgba(255,255,255,0) 100%)}
+    linear-gradient(180deg, rgba(241,247,255,.75) 0%, rgba(235,241,251,0) 100%)}
 html[dir="rtl"] .sky{background:
     radial-gradient(120% 86% at 84% -12%, #2B87FD 0%, rgba(87,160,254,.55) 34%, rgba(128,183,254,0) 68%),
-    linear-gradient(180deg, rgba(241,247,255,.9) 0%, rgba(255,255,255,0) 100%)}
+    linear-gradient(180deg, rgba(241,247,255,.75) 0%, rgba(235,241,251,0) 100%)}
 :root[data-theme="dark"] .sky{background:
     radial-gradient(120% 86% at 16% -12%, rgba(6,68,146,.55) 0%, rgba(11,35,65,.35) 40%, rgba(11,35,65,0) 72%),
     linear-gradient(180deg, rgba(11,35,65,.85) 0%, rgba(7,26,49,0) 100%)}
@@ -117,7 +118,7 @@ a{color:inherit}
 /* Alle fem skal paa én linje ogsaa paa 360px, ellers havner urdu til
    venstre paa linje to - stikk motsatt av hensikten med aa sette den sist. */
 .switch{display:flex;gap:4px;padding-bottom:8px;align-items:center}
-.switch button{background:var(--ink);border:1px solid var(--rule);border-radius:999px;
+.switch button{background:var(--ink-deep);border:1px solid var(--rule);border-radius:999px;
   color:var(--chalk);font:inherit;font-size:13px;font-weight:700;
   padding:7px clamp(8px,2.6vw,14px);
   cursor:pointer;font-family:var(--display);min-height:38px;line-height:1;
