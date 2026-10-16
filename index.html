@@ -282,6 +282,16 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
    lese om igjen et steg man har gjort. Fullfoeringen vises paa sirkelen
    alene — teksten staar i full styrke. */
 .guide > li.done h3{color:var(--chalk-dim)}
+/* Delhaker: hver linje i et steg er en handling man kan krysse av. */
+.subs{list-style:none;margin:10px 0 0;padding:0}
+
+.subs > li{display:flex;gap:10px;align-items:flex-start;padding:5px 0}
+.subs > li.on > span{color:var(--chalk-dim)}
+.sub{flex:0 0 auto;width:26px;height:26px;margin-top:1px;border-radius:7px;
+  border:1.5px solid var(--edge-ui);background:transparent;color:var(--on-gold);
+  font:800 .82rem/1 var(--display);display:grid;place-items:center;cursor:pointer;padding:0}
+.sub[aria-pressed="true"]{background:var(--gold-metal);border-color:var(--gold-metal)}
+.subs > li > span{flex:1 1 auto}
 .tick[aria-pressed="true"]::after{content:"";position:absolute;inset:0;
   border-radius:50%;box-shadow:0 0 0 3px var(--gold-metal)}
 .tick{position:absolute}
@@ -715,6 +725,9 @@ html[data-font="nastaliq"] .vs .vsnote{line-height:2}
 .acts li{position:relative;padding-inline-start:18px;margin:6px 0;line-height:1.55}
 .acts li::before{content:"";position:absolute;inset-inline-start:3px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--gold)}
 .acts.vnote li::before{background:var(--ember)}
+/* Delhaker erstatter kulepunktet: haken ER markoeren. */
+.acts.subs > li{padding-inline-start:0}
+.acts.subs > li::before{content:none}
 html[data-font="nastaliq"] .acts li{line-height:2.05}
 html[data-font="nastaliq"] .acts li::before{top:.95em}
 .p2p{margin:14px 0 0;max-width:var(--measure);border:1px solid var(--rule);border-radius:12px;background:var(--ink-deep);padding:0 14px}
@@ -1141,13 +1154,62 @@ function doneSet(){
   const raw = load("aimpire.done") || "";
   return new Set(raw.split(",").filter(function(x){ return x !== ""; }));
 }
-function toggleStep(i){
-  const set = doneSet(), k = String(i);
+/* Et langt steg er mange smaa handlinger. Hver linje kan hukes av for seg, saa
+   man ser hvor man er midt i steget - og slipper aa holde tretten trykk i hodet.
+   Ingen nye tekster: linjene finnes allerede. */
+function subSet(){
+  const raw = load("aimpire.sub") || "";
+  return new Set(raw.split(",").filter(function(x){ return x !== ""; }));
+}
+function subSave(set){ store("aimpire.sub", Array.from(set).join(",") || null); }
+function toggleSub(idx, n, total){
+  const set = subSet(), k = idx + ":" + n;
   if(set.has(k)) set.delete(k); else set.add(k);
-  store("aimpire.done", Array.from(set).join(","));
+  subSave(set);
+  /* Alle linjer huket av = steget er gjort. Fjerner man én, er det ikke det. */
+  let gjort = 0;
+  for(let i = 0; i < total; i++) if(set.has(idx + ":" + i)) gjort++;
+  const d = doneSet(), ks = String(idx);
+  if(gjort === total) d.add(ks); else d.delete(ks);
+  store("aimpire.done", Array.from(d).join(",") || null);
   render();
 }
-function clearSteps(){ store("aimpire.done", null); render(); }
+function actions(txt, idx){
+  if(txt.indexOf("\n") === -1) return el("p", null, txt);
+  const rows = txt.split("\n").filter(function(s){ return s.trim(); });
+  const set = subSet();
+  const ul = el("ul", "acts subs");
+  rows.forEach(function(s, n){
+    const li = document.createElement("li");
+    const on = set.has(idx + ":" + n);
+    const b = el("button", "sub", on ? "\u2713" : "");
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(on));
+    b.setAttribute("aria-label", s.slice(0, 60));
+    b.onclick = function(){ toggleSub(idx, n, rows.length); };
+    li.appendChild(b);
+    li.appendChild(el("span", null, s));
+    if(on) li.className = "on";
+    ul.appendChild(li);
+  });
+  return ul;
+}
+function toggleStep(i){
+  const set = doneSet(), k = String(i);
+  const paa = !set.has(k);
+  if(paa) set.add(k); else set.delete(k);
+  store("aimpire.done", Array.from(set).join(","));
+  /* Haken paa sirkelen gjelder hele steget: alle linjene foelger med. */
+  const G = C.guide[lang] || C.guide.en, st = G.steps[i];
+  if(st){
+    const rows = String(st[1]).split("\n").filter(function(x){ return x.trim(); });
+    const sub = subSet();
+    rows.forEach(function(_, n){ if(paa) sub.add(i + ":" + n); else sub.delete(i + ":" + n); });
+    subSave(sub);
+  }
+  render();
+}
+function clearSteps(){ store("aimpire.done", null); store("aimpire.sub", null); render(); }
 
 function copyCode(btn, value, label){
   function done(){
@@ -1362,7 +1424,7 @@ function render(){
     li.appendChild(tick);
 
     li.appendChild(el("h3",null,st[0]));
-    li.appendChild(lines(st[1]));
+    li.appendChild(actions(st[1], idx));
     const x = st[2];
     if(x && x.note) li.appendChild(lines(x.note, "vnote"));
 
